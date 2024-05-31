@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Novo Filme</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/formMovies.css}">
+    <script>
+        function validateGenre(input) {
+            input.value = input.value.replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ ]/g, '');
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const yearSelect = document.getElementById('releaseYear');
+            const currentYear = new Date().getFullYear();
+            for (let year = currentYear; year >= currentYear - 124; year--) {
+                let option = new Option(year, year);
+                yearSelect.add(option);
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>Inclusão de novo filme</h1>
+    <form th:action="@{/filmes/salvar}" th:object="${movie}" method="post" novalidate>
+        <div class="form-group">
+            <label for="title">Título</label>
+            <input type="text" id="title" name="title" th:field="*{title}" class="form-control" placeholder="Título do filme" required>
+            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label for="genre">Gênero</label>
+            <input type="text" id="genre" name="genre" th:field="*{genre}" class="form-control" placeholder="Gênero do filme" required oninput="validateGenre(this);">
+            <span th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label for="releaseYear">Ano de Lançamento</label>
+            <select id="releaseYear" name="releaseYear" th:field="*{releaseYear}" class="form-control" required>
+            </select>
+            <span th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}" class="error"></span>
+        </div>
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="/filmes" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
