@@ -2,28 +2,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Filmes</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/listMovies.css}">
 </head>
 <body>
-<h1>Lista de Filmes</h1>
+<div class="container">
+    <h1>Listagem de Filmes</h1>
 
-<a href="/filmes/novo" class="btn btn-primary">Adicionar Novo Filme</a>
+    <div th:if="${successMessage}" class="alert alert-success">
+        <p th:text="${successMessage}"></p>
+    </div>
 
-<table>
-    <thead>
-    <tr>
-        <th>Título</th>
-        <th>Gênero</th>
-        <th>Ano de Lançamento</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="movie : ${movies}">
-        <td th:text="${movie.title}">Título</td>
-        <td th:text="${movie.genre}">Gênero</td>
-        <td th:text="${movie.releaseYear}">Ano de Lançamento</td>
-    </tr>
-    </tbody>
-</table>
+    <a href="/filmes/novo" class="btn btn-primary">Incluir novo</a>
 
+    <div th:if="${#lists.isEmpty(movies)}" class="message">
+        Não há filmes cadastrados
+    </div>
+
+    <table th:if="${not #lists.isEmpty(movies)}">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Gênero</th>
+            <th>Ano de Lançamento</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="movie : ${movies}">
+            <td th:text="${movie.id}">ID</td>
+            <td th:text="${movie.title}">Título</td>
+            <td th:text="${movie.genre}">Gênero</td>
+            <td th:text="${movie.releaseYear}">Ano de Lançamento</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
