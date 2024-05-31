@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,13 +23,11 @@ public class MovieModel {
     private Long id;
 
     @NotBlank(message = "não deve estar em branco")
-    @Size(min = 1, max = 100)
     private String title;
 
     @NotBlank(message = "não deve estar em branco")
-    @Size(min = 1, max = 50)
     private String genre;
 
     @NotNull(message = "não deve ser nulo")
-    private Integer releaseYear;
+    private String releaseYear;
 }
